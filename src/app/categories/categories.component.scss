@@ -1,0 +1,18 @@
+.category-container{
+    .card{
+        min-height: 123px;
+        margin-bottom: 25px;
+    }
+    .add-category{
+        background-image: url(../../assets/vector-add-icon.webp);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 25%;
+        transition: 0.5s ease-in-out all;
+        cursor: pointer;
+    }
+    .add-category:hover{
+        transition: 0.5s ease-in-out all;
+        background-size: 35%;
+    }
+}

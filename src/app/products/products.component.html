@@ -1,0 +1,122 @@
+<div class="product-container">
+    <div class="row mb-4">
+        <div class="col-12 col-md-8">
+            <h3>Products</h3>
+        </div>
+        <div class="col-12 col-md-4">
+            <button type="button" class="btn btn-primary" (click)="onAdd()" data-toggle="modal"
+                data-target="#addEitProductModal">Add Product</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="code">
+                    <th mat-header-cell *matHeaderCellDef> Code </th>
+                    <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef> Price </th>
+                    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                </ng-container>
+                <!-- edit Column -->
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef> edit </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#addEitProductModal"
+                            (click)="onEdit(row)">edit</button>
+                    </td>
+                </ng-container>
+                <!-- delete Column -->
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <button class="btn btn-danger" data-toggle="modal"
+                            data-target="#deleteProductModal" [disabled]="productsToDelete.length==0">delete</button>
+                        </th>
+                    <td mat-cell *matCellDef="let row">
+                        <input type="checkbox" name="deleteProduct" (change)="onClickDelete(row)">
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
+
+<!-- Edit/Add Modal -->
+<div class="modal fade" id="addEitProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #productForm="ngForm">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="code">Code</label>
+                        <input [(ngModel)]="product.code" type="number" name="code" class="form-control"
+                            id="product_code" placeholder="product code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="code">Name</label>
+                        <input [(ngModel)]="product.name" type="text" name="name" class="form-control" id="product_name"
+                            placeholder="product name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="code">Price</label>
+                        <input [(ngModel)]="product.price" type="number" name="price" class="form-control"
+                            id="product_price" placeholder="product price" required>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button [disabled]="!productForm.form.valid" type="submit" class="btn btn-primary"
+                        data-dismiss="modal" (click)="addProduct()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <h4>Are you sure you want to delete this product ?</h4>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onDelete()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
